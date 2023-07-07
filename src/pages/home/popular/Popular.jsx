@@ -8,10 +8,12 @@ import Carousel from '../../../components/carousel/Carousel';
 
 const Popular = () => {
 	const [endpoint, setEndPoint] = useState('movie');
+	const [media, setMedia] = useState('movie');
 
 	const { data, loading } = useFetch(`/${endpoint}/popular`);
 	const onTabChange = (tab) => {
 		setEndPoint(tab === 'Movies' ? 'movie' : 'tv');
+		setMedia(tab === 'Movie' ? 'movie' : 'tv');
 	};
 	return (
 		<div className='carouselSection'>
@@ -19,7 +21,7 @@ const Popular = () => {
 				<span className='carouselTitle'>What's Popular</span>
 				<SwitchTabs data={['Movies', 'TV Shows']} onTabChange={onTabChange} />
 			</ContentWrapper>
-			<Carousel data={data?.results} loading={loading} />
+			<Carousel data={data?.results} media={media} loading={loading} />
 		</div>
 	);
 };

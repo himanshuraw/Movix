@@ -16,7 +16,7 @@ import PosterFallback from '../../assets/no-poster.png';
 import './style.scss';
 import CircleRating from '../circleRating/CircleRating';
 import Genres from '../genres/Genres';
-const Carousel = ({ data, loading }) => {
+const Carousel = ({ data, media, loading, title }) => {
 	const carouselContainer = useRef();
 	const { url } = useSelector((state) => state.home);
 	const navigate = useNavigate();
@@ -50,6 +50,7 @@ const Carousel = ({ data, loading }) => {
 	return (
 		<div className='carousel'>
 			<ContentWrapper>
+				{title && <div className='carouselTitle'>{title}</div>}
 				<BsFillArrowLeftCircleFill
 					className='carouselLeftNav arrow'
 					onClick={() => navigation('left')}
@@ -68,7 +69,11 @@ const Carousel = ({ data, loading }) => {
 								<div
 									key={item.id}
 									className='carouselItem'
-									onClick={() => navigate(`/${item.media_type}/${item.id}`)}
+									onClick={() => {
+										if (item.media_type === undefined)
+											return navigate(`/${media}/${item.id}`);
+										return navigate(`/${item.media_type}/${item.id}`);
+									}}
 								>
 									<div className='posterBlock'>
 										<Img src={posterUrl} />
@@ -78,7 +83,7 @@ const Carousel = ({ data, loading }) => {
 									<div className='textBlock'>
 										<span className='title'>{item.title || item.name}</span>
 										<span className='date'>
-											{dayjs(item.release_Date).format('MMm D, YYYY')}
+											{dayjs(item.release_Date).format('MMM D, YYYY')}
 										</span>
 									</div>
 								</div>
