@@ -46,16 +46,10 @@ const HeroBanner = () => {
 						<input
 							type='text'
 							placeholder='Search for movies or TV shows...'
-							onChange={(event) =>
-								setQuery(() => {
-									let q = event.target.value;
-									q = q.split(' ').join('+');
-									return q;
-								})
-							}
+							onChange={(event) => setQuery(event.target.value)}
 							onKeyUp={searchQueryHandler}
 						/>
-						<button>Search</button>
+						<button onClick={() => navigate(`/search/${query}`)}>Search</button>
 					</div>
 				</div>
 			</ContentWrapper>
